@@ -3,6 +3,8 @@ package nl.lukasmiedema.telegrambotapi;
 import nl.lukasmiedema.telegrambotapi.handler.MessageEvent;
 import nl.lukasmiedema.telegrambotapi.handler.MessageHandler;
 import nl.lukasmiedema.telegrambotapi.handler.MessageType;
+import nl.lukasmiedema.telegrambotapi.telegram.message.TelegramMediaMessage;
+import nl.lukasmiedema.telegrambotapi.telegram.message.TelegramMessage;
 import nl.lukasmiedema.telegrambotapi.telegram.response.TelegramUpdate;
 
 import java.io.File;
@@ -18,7 +20,7 @@ public class TelegramBot {
     private final Map<MessageType, List<MessageHandler>> messageHandlers;
 
     /**
-     * Constructs a new TelegramBot.
+     * Constructs a new TelegramBot with web hooks.
      * @param token the bot token
      * @param serverLocal the url to bind to for callbacks
      * @param serverRemote the remote view of this url (ie global IP)
@@ -27,21 +29,27 @@ public class TelegramBot {
     private TelegramBot(String token, URI serverLocal, String serverRemote, File cert,
                         Map<MessageType, List<MessageHandler>> messageHandlers) {
 
+        this.messageHandlers = messageHandlers;
+
         // Create the API
-        this.api = new TelegramApi(token, serverLocal, this::callback);
+        this.api = new TelegramWebhookApi(token, serverLocal, this::callback);
 
         // Send the web hook
-        this.api.setWebhook(serverRemote, cert);
-
-        // Make a defensive copy
-        this.messageHandlers = new LinkedHashMap<>(messageHandlers.size());
-        for (Map.Entry<MessageType, List<MessageHandler>> e: messageHandlers.entrySet()) {
-
-            // Use array list as we now know the size
-            this.messageHandlers.put(e.getKey(), new ArrayList<>(e.getValue()));
-        }
-
+        ((TelegramWebhookApi) api).setWebhook(serverRemote, cert);
     }
+
+    /**
+     * Constructs a new TelegramBot with long polling.
+     * @param token the bot token
+     */
+    private TelegramBot(String token, Map<MessageType, List<MessageHandler>> messageHandlers) {
+
+        this.messageHandlers = messageHandlers;
+
+        // Create the API
+        this.api = new TelegramPollingApi(token, this::callback);
+    }
+
 
     /**
      * Invoked by the API when a callback comes in
@@ -91,16 +99,22 @@ public class TelegramBot {
      */
     public static class Builder {
 
-        private final String token, serverRemote;
-        private final URI serverLocal;
-        private final File cert;
+        private final String token;
+
+        // Web hooks related
+        private String serverRemote;
+        private URI serverLocal;
+        private File cert;
+        private boolean webhooks = false; // true for webhooks, false for long polling
+
         private final Map<MessageType, List<MessageHandler>> messageHandlers = new LinkedHashMap<>();
 
-        public Builder(String token, String serverRemote, URI serverLocal, File cert) {
-            this.token = token;
-            this.serverRemote = serverRemote;
-            this.serverLocal = serverLocal;
-            this.cert = cert;
+        /**
+         * Constructs a new Builder
+         * @param botToken the API token of the bot. This can be obtained from the "BotFather" Telegram bot.
+         */
+        public Builder(String botToken) {
+            this.token = botToken;
         }
 
         /**
@@ -120,14 +134,38 @@ public class TelegramBot {
         }
 
         /**
+         * Enables webhooks instead of long polling (which is default)
+         * @param serverRemote the callback url to send to the telegram servers
+         * @param serverLocal the callback url to bind to
+         * @param cert the certificate (can be self-signed)
+         * @return
+         */
+        public Builder webhooks(String serverRemote, URI serverLocal, File cert) {
+            this.serverRemote = serverRemote;
+            this.serverLocal = serverLocal;
+            this.cert = cert;
+            webhooks = true;
+            return this;
+        }
+
+        /**
          * Builds the TelegramBot
          * @return
          */
         public TelegramBot build() {
-            if (token == null || serverLocal == null || serverRemote == null || cert == null) {
-                throw new IllegalStateException("Not all properties have been set");
+
+            // Make a defensive copy of the messages
+            Map<MessageType, List<MessageHandler>> handlersCopy = new LinkedHashMap<>(messageHandlers.size());
+            for (Map.Entry<MessageType, List<MessageHandler>> e: messageHandlers.entrySet()) {
+                handlersCopy.put(e.getKey(), new ArrayList<>(e.getValue()));
             }
-            return new TelegramBot(token, serverLocal, serverRemote, cert, messageHandlers);
+
+            // Make a TelegramBot
+            if (webhooks) {
+                return new TelegramBot(token, serverLocal, serverRemote, cert, handlersCopy);
+            } else {
+                return new TelegramBot(token, handlersCopy);
+            }
         }
     }
 }
