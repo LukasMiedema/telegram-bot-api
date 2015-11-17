@@ -100,7 +100,7 @@ public class MessageType<M extends TelegramMessage> {
             public static final FILE<TelegramFile> ANY =
                     new FILE<>(TelegramFile.class);
 
-            public static final FILE<TelegramAudio> AUDIO =
+            public static final FILE<? super TelegramAudio> AUDIO =
                     new FILE<>(TelegramAudio.class);
 
             public static final FILE<TelegramDocument> DOCUMENT =
