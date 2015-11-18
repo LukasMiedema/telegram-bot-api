@@ -48,7 +48,7 @@ public class TelegramCommandMessage extends TelegramMessage {
         String cmdAndTarget = split[0];
         int cmdLength = cmdAndTarget.indexOf('@');
         String target = null;
-        String command = null;
+        String command;
 
         // The command was either send like this: /command@Target
         // or like this: /command

@@ -8,7 +8,7 @@ public enum TelegramParseMode {
 
     private final String name;
 
-    private TelegramParseMode(String nm) {
+    TelegramParseMode(String nm) {
         this.name = nm;
     }
 

@@ -35,7 +35,7 @@ public class TelegramBot {
         this.api = new TelegramWebhookApi(token, serverLocal, this::callback);
 
         // Send the web hook
-        ((TelegramWebhookApi) api).setWebhook(serverRemote, cert);
+        api.setWebhook(serverRemote, cert);
     }
 
     /**
@@ -66,6 +66,7 @@ public class TelegramBot {
      * Dispatches a MessageEvent to all registered listeners.
      * @param event
      */
+    @SuppressWarnings("unchecked")
     public void dispatch(MessageEvent<?> event) {
         for (Map.Entry<MessageType, List<MessageHandler>> e: messageHandlers.entrySet()) {
 
@@ -123,10 +124,10 @@ public class TelegramBot {
          * @param type
          * @param handler
          */
-        public Builder register(MessageType type, MessageHandler handler) {
+        public <T extends TelegramMessage> Builder register(MessageType<T> type, MessageHandler<T> handler) {
             List<MessageHandler> handlers = this.messageHandlers.get(type);
             if (handlers == null) {
-                handlers = new LinkedList<MessageHandler>();
+                handlers = new LinkedList<>();
                 this.messageHandlers.put(type, handlers);
             }
             handlers.add(handler);

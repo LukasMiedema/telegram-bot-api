@@ -1,5 +1,7 @@
 package nl.lukasmiedema.telegrambotapi.telegram.chat;
 
+import nl.lukasmiedema.telegrambotapi.telegram.TelegramUser;
+
 /**
  * TelegramChat with "PRIVATE" as type.
  * Private chats are one-to-one, where we are one party.
@@ -8,46 +10,23 @@ package nl.lukasmiedema.telegrambotapi.telegram.chat;
  */
 public class TelegramPrivateChat extends TelegramChat {
 
-    private final String username;
-    private final String firstName;
-    private final String lastName;
+    private final TelegramUser user;
 
     /**
-     * Constructs a new TelegramPrivateChat
-     * @param id the chat id
-     * @param username the username of the other party, or null if not set.
-     * @param firstName the first name of the other party, or null if not set.
-     * @param lastName the last name of the other party, or null if not set.
+     * Constructs a new TelegramPrivateChat using the user id as chat id
+     * @param user the other party
      */
-    public TelegramPrivateChat(int id, String username, String firstName, String lastName) {
-        super(id);
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public TelegramPrivateChat(TelegramUser user) {
+        super(user.getId());
+        this.user = user;
     }
 
     /**
-     * Returns the user name of the other party, or null if not set.
+     * Returns the other party in this conversation.
      * @return
      */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Returns the first name of the other party, or null if not set.
-     * @return
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Returns the last name of the other party, or null if not set.
-     * @return
-     */
-    public String getLastName() {
-        return lastName;
+    public TelegramUser getUser() {
+        return user;
     }
 
     /**
@@ -62,9 +41,7 @@ public class TelegramPrivateChat extends TelegramChat {
     @Override
     public String toString() {
         return "TelegramPrivateChat{" +
-                "username='" + username + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "user=" + user +
                 "} " + super.toString();
     }
 }

@@ -13,7 +13,7 @@ public class TelegramChannelChat extends TelegramChat {
      * Construct a new TelegramChannelChat.
      * @param id the telegram chat id.
      */
-    public TelegramChannelChat(int id, String title) {
+    public TelegramChannelChat(long id, String title) {
         super(id);
         this.title = title;
     }

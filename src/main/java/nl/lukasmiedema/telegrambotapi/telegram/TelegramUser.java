@@ -17,7 +17,7 @@ public class TelegramUser {
      */
     public final static GenericType<TelegramResponse<TelegramUser>> GENERIC_TYPE = new GenericType<TelegramResponse<TelegramUser>>(){};
 
-    private final int id;
+    private final long id;
     private final String firstName;
     private final String lastName;
     private final String username;
@@ -30,7 +30,7 @@ public class TelegramUser {
      * @param username the user name (@...), or null if the user hasn't set a username.
      */
     @JsonCreator
-    public TelegramUser(@JsonProperty("id") int id, @JsonProperty("first_name") String firstName,
+    public TelegramUser(@JsonProperty("id") long id, @JsonProperty("first_name") String firstName,
                         @JsonProperty("last_name") String lastName, @JsonProperty("username") String username) {
         this.id = id;
         this.firstName = firstName;
@@ -42,7 +42,7 @@ public class TelegramUser {
      * Returns the Telegram User Id.
      * @return
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 

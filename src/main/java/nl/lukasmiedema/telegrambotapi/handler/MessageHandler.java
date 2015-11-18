@@ -16,6 +16,6 @@ public interface MessageHandler<M extends TelegramMessage> {
      * @param event     the message event
      * @param api       the TelegramApi which can be used to send a response
      */
-    public void handle(MessageEvent<M> event, TelegramApi api);
+    void handle(MessageEvent<M> event, TelegramApi api);
 
 }

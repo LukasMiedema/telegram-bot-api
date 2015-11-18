@@ -29,8 +29,7 @@ public abstract class TelegramApi {
     // The API url
     public static final String API_URL = "https://api.telegram.org/bot";
 
-    protected final WebTarget api;
-    private final Client client;
+    private final WebTarget api;
 
     /**
      * Construct a new TelegramApi with the provided bot token
@@ -43,8 +42,8 @@ public abstract class TelegramApi {
         provider.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         // Create a rest client with JSON support
-        this.client = ClientBuilder.newBuilder().register(MultiPartFeature.class).register(provider).build();
-        this.client.register(new LoggingFilter(Logger.getAnonymousLogger(), true));
+        Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).register(provider).build();
+        client.register(new LoggingFilter(Logger.getAnonymousLogger(), true));
 
         // Create target
         this.api = client.target(API_URL + token);
@@ -70,6 +69,7 @@ public abstract class TelegramApi {
      * @param replyToMessage the id of the message to quote. If isReplyTo is false, this is ignored.
      * @return
      */
+    @SuppressWarnings("unchecked")
     public TelegramResponse<TelegramTextMessage>
     sendText(long chatId, String text, TelegramParseMode mode, boolean disableWebPagePreview, boolean isReplyTo,
              int replyToMessage) {

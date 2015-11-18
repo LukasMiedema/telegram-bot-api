@@ -2,6 +2,7 @@ package nl.lukasmiedema.telegrambotapi.telegram.chat;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.lukasmiedema.telegrambotapi.telegram.TelegramUser;
 
 /**
  * Represents a Telegram Chat
@@ -9,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public abstract class TelegramChat {
 
-    private final int id;
+    private final long id;
 
     /**
      * Construct a new TelegramChat.
      * @param id the telegram chat id.
      */
-    public TelegramChat(int id) {
+    public TelegramChat(long id) {
         this.id = id;
     }
 
@@ -23,7 +24,7 @@ public abstract class TelegramChat {
      * Returns the unique chat id.
      * @return
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -36,7 +37,7 @@ public abstract class TelegramChat {
     /**
      * Represents the telegram chat types.
      */
-    public static enum TelegramChatType {
+    public enum TelegramChatType {
         PRIVATE,
         GROUP,
         CHANNEL
@@ -60,7 +61,7 @@ public abstract class TelegramChat {
      */
     @JsonCreator
     public static TelegramChat create(
-            @JsonProperty("id") int id,
+            @JsonProperty("id") long id,
             @JsonProperty("type") String typeRaw,
             @JsonProperty("title") String title,
             @JsonProperty("username") String username,
@@ -71,7 +72,8 @@ public abstract class TelegramChat {
             case "group":
                 return new TelegramGroupChat(id, title);
             case "private":
-                return new TelegramPrivateChat(id, username, firstName, lastName);
+                TelegramUser other = new TelegramUser(id, firstName, lastName, username);
+                return new TelegramPrivateChat(other);
             case "channel":
                 return new TelegramChannelChat(id, title);
             default:

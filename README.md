@@ -20,7 +20,7 @@ Execute as `java MyAwesomeBot <bot token>`
 
 ### Introduction
 
-telegram-bot-api is a Java implementation of the [Telegram Bot API](https://core.telegram.org/bots/api). Unlike the Telegram API, which is classless (it doens't have a data type hierarchy), this API very much offers a such hierarchy. Combined with a functional Java 8 MessageHandler format, this API is the easiest way to get fast, stable bot into the world!
+telegram-bot-api is a Java implementation of the [Telegram Bot API](https://core.telegram.org/bots/api). Unlike the Telegram API, which is classless (it doesn't have a data type hierarchy), this API very much offers a such hierarchy. Combined with a functional Java 8 MessageHandler format, this API is the easiest way to get fast, stable bot into the world!
 
 Documentation, test cases and more to follow!
 

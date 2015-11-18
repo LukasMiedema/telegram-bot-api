@@ -23,7 +23,7 @@ import java.net.URI;
 import java.util.function.Consumer;
 
 /**
- * TelgramApi using webhooks for callbacks. It sets up an internal web server.
+ * TelegramApi using webhooks for callbacks. It sets up an internal web server.
  * Instances should be constructed via {@link nl.lukasmiedema.telegrambotapi.TelegramBot.Builder}
  * @author Lukas Miedema
  */

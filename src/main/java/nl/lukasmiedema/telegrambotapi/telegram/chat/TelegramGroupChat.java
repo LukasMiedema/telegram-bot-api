@@ -13,7 +13,7 @@ public class TelegramGroupChat extends TelegramChat {
      * @param id the telegram chat id.
      * @param title
      */
-    public TelegramGroupChat(int id, String title) {
+    public TelegramGroupChat(long id, String title) {
         super(id);
         this.title = title;
     }
