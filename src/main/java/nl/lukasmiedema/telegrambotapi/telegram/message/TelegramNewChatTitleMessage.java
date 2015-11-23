@@ -23,7 +23,7 @@ public class TelegramNewChatTitleMessage extends TelegramMessage {
      * @param replyToMessage           the message this was a reply to, or null
      * @param chatTitle                the new chat title.
      */
-    public TelegramNewChatTitleMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramNewChatTitleMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                        TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                        TelegramMessage replyToMessage, String chatTitle) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

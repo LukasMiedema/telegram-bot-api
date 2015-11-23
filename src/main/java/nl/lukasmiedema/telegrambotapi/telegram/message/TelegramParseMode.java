@@ -4,7 +4,16 @@ package nl.lukasmiedema.telegrambotapi.telegram.message;
  * @author Lukas Miedema
  */
 public enum TelegramParseMode {
-    MARKDOWN("Markdown");
+
+    /**
+     * Use markdown to parse the message
+     */
+    MARKDOWN("Markdown"),
+
+    /**
+     * Don't do any message parsing
+     */
+    NORMAL(null);
 
     private final String name;
 

@@ -43,7 +43,7 @@ public class TelegramMediaMessage<M extends TelegramMedia> extends TelegramMessa
      * @param media                    the media file attached to this message
      * @param caption                  the caption of this video, or null if there's no caption or this isn't a video.
      */
-    public TelegramMediaMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramMediaMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                 TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                 TelegramMessage replyToMessage, M media, String caption) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

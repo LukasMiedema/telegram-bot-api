@@ -23,7 +23,7 @@ public class TelegramUserJoinMessage extends TelegramMessage {
      * @param replyToMessage           the message this was a reply to, or null
      * @param joiningUser              the user who per this message joins this chat
      */
-    public TelegramUserJoinMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramUserJoinMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                    TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                    TelegramMessage replyToMessage, TelegramUser joiningUser) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

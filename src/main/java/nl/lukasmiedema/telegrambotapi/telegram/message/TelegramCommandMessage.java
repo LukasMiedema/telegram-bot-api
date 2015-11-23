@@ -30,7 +30,7 @@ public class TelegramCommandMessage extends TelegramMessage {
      * @param replyToMessage the rawMessage this was a reply to, or null.
      * @param message the text rawMessage, with leading /
      */
-    public TelegramCommandMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramCommandMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                   TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                   TelegramMessage replyToMessage, String message) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

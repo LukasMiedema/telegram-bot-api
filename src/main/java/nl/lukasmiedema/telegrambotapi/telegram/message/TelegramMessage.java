@@ -22,7 +22,7 @@ public class TelegramMessage {
     public final static GenericType<TelegramResponse<? extends TelegramMessage>> GENERIC_TYPE =
             new GenericType<TelegramResponse<? extends TelegramMessage>>(){};
 
-    private final int messageId;
+    private final long messageId;
     private final TelegramUser from;
     private final long timestampMillis;
     private final TelegramChat chat;
@@ -40,7 +40,7 @@ public class TelegramMessage {
      * @param forwardedTimestampMillis the timestamp of the original message, or 0
      * @param replyToMessage the message this was a reply to, or null
      */
-    public TelegramMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat, TelegramUser forwardedFrom, long forwardedTimestampMillis, TelegramMessage replyToMessage) {
+    public TelegramMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat, TelegramUser forwardedFrom, long forwardedTimestampMillis, TelegramMessage replyToMessage) {
         this.messageId = messageId;
         this.from = from;
         this.timestampMillis = timestampMillis;
@@ -54,7 +54,7 @@ public class TelegramMessage {
      * Returns the message id.
      * @return
      */
-    public int getMessageId() {
+    public long getMessageId() {
         return messageId;
     }
 
@@ -132,7 +132,7 @@ public class TelegramMessage {
      */
     @JsonCreator
     public static TelegramMessage create(
-            @JsonProperty(value = "message_id", required =true) int messageId,
+            @JsonProperty(value = "message_id", required =true) long messageId,
             @JsonProperty(value = "from", required = true) TelegramUser from,
             @JsonProperty(value = "date", required = true) long timestampMillis,
             @JsonProperty(value = "chat", required = true) TelegramChat chat,

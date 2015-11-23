@@ -24,7 +24,7 @@ public class TelegramUserLeaveMessage extends TelegramMessage {
      * @param replyToMessage           the message this was a reply to, or null
      * @param leavingUser              the user who left this chat
      */
-    public TelegramUserLeaveMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramUserLeaveMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                     TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                     TelegramMessage replyToMessage, TelegramUser leavingUser) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

@@ -20,7 +20,7 @@ public class TelegramNewGroupChatMessage extends TelegramMessage {
      * @param forwardedTimestampMillis the timestamp of the original message, or 0
      * @param replyToMessage           the message this was a reply to, or null
      */
-    public TelegramNewGroupChatMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramNewGroupChatMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                        TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                        TelegramMessage replyToMessage) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

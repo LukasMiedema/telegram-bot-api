@@ -39,7 +39,7 @@ public class TelegramPollingApi extends TelegramApi {
      * @param token     the bot token
      * @param callback  the callback
      */
-    TelegramPollingApi(String token, Consumer<TelegramUpdate> callback) {
+    public TelegramPollingApi(String token, Consumer<TelegramUpdate> callback) {
         super(token);
 
         // Unregister webhooks

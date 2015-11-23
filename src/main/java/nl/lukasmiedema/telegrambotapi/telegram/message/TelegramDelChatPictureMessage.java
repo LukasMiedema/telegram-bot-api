@@ -20,7 +20,7 @@ public class TelegramDelChatPictureMessage extends TelegramMessage {
      * @param forwardedTimestampMillis the timestamp of the original message, or 0
      * @param replyToMessage           the message this was a reply to, or null
      */
-    public TelegramDelChatPictureMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramDelChatPictureMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                          TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                          TelegramMessage replyToMessage) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

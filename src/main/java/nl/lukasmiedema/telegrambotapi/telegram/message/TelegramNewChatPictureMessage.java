@@ -25,7 +25,7 @@ public class TelegramNewChatPictureMessage extends TelegramMessage {
      * @param replyToMessage           the message this was a reply to, or null
      * @param chatPicture              the new chat picture
      */
-    public TelegramNewChatPictureMessage(int messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
+    public TelegramNewChatPictureMessage(long messageId, TelegramUser from, long timestampMillis, TelegramChat chat,
                                          TelegramUser forwardedFrom, long forwardedTimestampMillis,
                                          TelegramMessage replyToMessage, TelegramPictureSet chatPicture) {
         super(messageId, from, timestampMillis, chat, forwardedFrom, forwardedTimestampMillis, replyToMessage);

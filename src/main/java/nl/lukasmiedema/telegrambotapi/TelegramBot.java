@@ -50,12 +50,22 @@ public class TelegramBot {
         this.api = new TelegramPollingApi(token, this::callback);
     }
 
+    /**
+     * Constructor without builder. Generally you wanna use the builder.
+     * @param api
+     * @param messageHandlers
+     */
+    public TelegramBot(TelegramApi api, Map<MessageType, List<MessageHandler>> messageHandlers) {
+        this.api = api;
+        this.messageHandlers = messageHandlers;
+    }
+
 
     /**
      * Invoked by the API when a callback comes in
      * @param update
      */
-    private void callback(TelegramUpdate update) {
+    public void callback(TelegramUpdate update) {
 
         // Create a MessageEvent
         MessageEvent<?> event = new MessageEvent<>(update.getMessage(), false);

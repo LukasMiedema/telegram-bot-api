@@ -9,7 +9,6 @@ import nl.lukasmiedema.telegrambotapi.telegram.message.TelegramMessage;
 import nl.lukasmiedema.telegrambotapi.telegram.message.TelegramParseMode;
 import nl.lukasmiedema.telegrambotapi.telegram.message.TelegramTextMessage;
 import nl.lukasmiedema.telegrambotapi.telegram.response.*;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
@@ -18,7 +17,6 @@ import javax.ws.rs.client.*;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * Via a TelegramApi instance Telegram API methods can be invoked.
@@ -43,7 +41,7 @@ public abstract class TelegramApi {
 
         // Create a rest client with JSON support
         Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).register(provider).build();
-        client.register(new LoggingFilter(Logger.getAnonymousLogger(), true));
+        //client.register(new LoggingFilter(Logger.getAnonymousLogger(), true));
 
         // Create target
         this.api = client.target(API_URL + token);
@@ -72,13 +70,15 @@ public abstract class TelegramApi {
     @SuppressWarnings("unchecked")
     public TelegramResponse<TelegramTextMessage>
     sendText(long chatId, String text, TelegramParseMode mode, boolean disableWebPagePreview, boolean isReplyTo,
-             int replyToMessage) {
+             long replyToMessage) {
 
         // Create the message
         ObjectNode message = new ObjectNode(JsonNodeFactory.instance);
         message.put("chat_id", chatId);
         message.put("text", text);
-        message.put("parse_mode", mode.toString());
+        if (mode.toString() != null) {
+            message.put("parse_mode", mode.toString());
+        }
         message.put("disable_web_page_preview", disableWebPagePreview);
         if (isReplyTo) {
             message.put("reply_to_message_id", replyToMessage);
@@ -118,27 +118,27 @@ public abstract class TelegramApi {
 
     /**
      * Sends a text message
-     * Shortcut for return this.sendText(chatId, text, TelegramParseMode.MARKDOWN, false, false, 0);<br>
-     * See {@link #sendText(long, String, TelegramParseMode, boolean, boolean, int)}
+     * Shortcut for return this.sendText(chatId, text, TelegramParseMode.NORMAL, false, false, 0);<br>
+     * See {@link #sendText(long, String, TelegramParseMode, boolean, boolean, long)}
      * @param chatId the chat to send it to
      * @param text the text of the message
      * @return
      */
     public TelegramResponse<TelegramTextMessage> sendText(long chatId, String text) {
-        return this.sendText(chatId, text, TelegramParseMode.MARKDOWN, false, false, 0);
+        return this.sendText(chatId, text, TelegramParseMode.NORMAL, false, false, 0);
     }
 
     /**
      * Sends a text message as a reply to someone else
-     * Shortcut for return this.sendText(chatId, text, TelegramParseMode.MARKDOWN, false, true, replyToMessage);<br>
-     * See {@link #sendText(long, String, TelegramParseMode, boolean, boolean, int)}
+     * Shortcut for return this.sendText(chatId, text, TelegramParseMode.NORMAL, false, true, replyToMessage);<br>
+     * See {@link #sendText(long, String, TelegramParseMode, boolean, boolean, long)}
      * @param chatId the chat to send it to
      * @param text the text of the message
      * @param replyToMessage the ID of the message to reply to
      * @return
      */
-    public TelegramResponse<TelegramTextMessage> sendText(long chatId, String text, int replyToMessage) {
-        return this.sendText(chatId, text, TelegramParseMode.MARKDOWN, false, true, replyToMessage);
+    public TelegramResponse<TelegramTextMessage> sendText(long chatId, String text, long replyToMessage) {
+        return this.sendText(chatId, text, TelegramParseMode.NORMAL, false, true, replyToMessage);
     }
 
 
